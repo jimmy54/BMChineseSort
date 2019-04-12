@@ -2,7 +2,7 @@ BMChineseSort
 =======================
 [![Use Language](https://img.shields.io/badge/language-objc-green.svg)](https://github.com/Baymax0/BMChineseSort)
 [![Use Language](https://img.shields.io/badge/language-swift-orange.svg)](https://github.com/Baymax0/BMChineseSort)
-[![Use Language](https://img.shields.io/badge/version-0.2.3-blue.svg)](https://github.com/Baymax0/BMChineseSort)
+[![Use Language](https://img.shields.io/badge/version-0.2.5-blue.svg)](https://github.com/Baymax0/BMChineseSort)
 [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
 
 ## 介绍
@@ -12,7 +12,7 @@ BMChineseSort
 
 提供 swift 版本（基于反射实现，尽量不使用偏oc的方法）
 
-注:（在issues里反馈的时候最好注明下是oc还是swift问题）
+注:（定期维护，如果将本项目用于生产环境，推荐 watching 本项目，及时收到更新通知）
 
 ## 使用(TableView分组排序)
 
@@ -176,6 +176,9 @@ swift 中参数的设置试例：
 
 
 ## Migration
+### Version 0.2.5
+
+oc版：修复无法查找到父类属性的问题
 
 ### Version 0.2.4
 

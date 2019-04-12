@@ -111,7 +111,6 @@ dispatch_semaphore_t semaphore;
 
 +(void)sortAndGroup:(NSArray*)objectArray
                 key:(NSString *)key
-           className:(Class)cls
              finish:(void (^)(bool isSuccess,
                               NSMutableArray *unGroupedArr,
                               NSMutableArray *sectionTitleArr,
@@ -132,17 +131,23 @@ dispatch_semaphore_t semaphore;
         }
         containKey = YES;
     }else{
-        unsigned int outCount, i;
-        NSObject *obj = objectArray.firstObject;
-        Class cla = cls != nil ? cls : obj.class;
-        Ivar *ivars = class_copyIvarList(cla, &outCount);
-        for (i = 0; i < outCount; i++) {
-            Ivar property = ivars[i];
-            NSString *keyName = [NSString stringWithCString:ivar_getName(property) encoding:NSUTF8StringEncoding];
-            NSString *tempKey = [NSString stringWithFormat:@"_%@",key];
-            if ([keyName isEqualToString:tempKey]) {
-                containKey = YES;
+        Class cla = ((NSObject*)objectArray.firstObject).class;
+        while (cla != Nil){
+            unsigned int outCount, i;
+            Ivar *ivars = class_copyIvarList(cla, &outCount);
+            for (i = 0; i < outCount; i++) {
+                Ivar property = ivars[i];
+                NSString *keyName = [NSString stringWithCString:ivar_getName(property) encoding:NSUTF8StringEncoding];
+                NSString *tempKey = [NSString stringWithFormat:@"_%@",key];
+                if ([keyName isEqualToString:tempKey]) {
+                    containKey = YES;
+                    break;
+                }
             }
+            if (containKey == YES) {
+                break;
+            }
+            cla = class_getSuperclass(cla.class);
         }
     }
     if (!containKey) {
@@ -262,7 +267,9 @@ dispatch_semaphore_t semaphore;
 // 开关控制打印
 +(void)logMsg:(NSString*)msg{
     if (BMChineseSortSetting.share.logEable == YES) {
+        NSLog(@"------------------");
         NSLog(@"%@", msg);
+        NSLog(@"------------------");
     }
 }
 
